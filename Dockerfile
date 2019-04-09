@@ -1,9 +1,8 @@
-FROM debian:latest
+FROM debian:9
 
 ENV CARGO_BUILD_TARGET_DIR=/tmp/target
 
-RUN set -x && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y \
             libpcre3-dev \
             zlib1g-dev \
@@ -28,8 +27,7 @@ COPY ./nginx.conf /usr/local/nginx/conf/
 COPY ./src /work/src
 COPY ./Cargo.* /work/
 
-RUN set -x && \
-    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
     . ~/.cargo/env && \
     cd /work && \
     cargo build --target-dir /tmp/target
